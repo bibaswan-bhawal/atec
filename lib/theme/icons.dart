@@ -11,4 +11,6 @@ abstract class AppIcons {
 
   static final SvgPicture home_dark = SvgPicture.asset('$_assets/home_dark.svg');
   static final SvgPicture book_dark = SvgPicture.asset('$_assets/book_dark.svg');
+
+  static final SvgPicture magnify_plus_light = SvgPicture.asset('$_assets/magnify_plus_light.svg');
 }

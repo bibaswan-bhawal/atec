@@ -11,7 +11,9 @@ final GlobalKey<NavigatorState> defaultShellNavigatorkey = GlobalKey<NavigatorSt
 
 @TypedShellRoute<DefaultShellRoute>(
   routes: [
-    TypedGoRoute<HomeRoute>(path: '/home'),
+    TypedGoRoute<HomeRoute>(path: '/home', routes: [
+      TypedGoRoute<InspectRoute>(path: 'inspect'),
+    ]),
     TypedGoRoute<PatientsRoute>(path: '/patients'),
   ],
 )
@@ -26,7 +28,6 @@ class DefaultShellRoute extends ShellRouteData {
   }
 }
 
-@TypedGoRoute<HomeRoute>(path: '/home')
 class HomeRoute extends GoRouteData {
   const HomeRoute();
 
@@ -44,7 +45,6 @@ class HomeRoute extends GoRouteData {
       );
 }
 
-@TypedGoRoute<PatientsRoute>(path: '/patients')
 class PatientsRoute extends GoRouteData {
   const PatientsRoute();
 
@@ -52,6 +52,25 @@ class PatientsRoute extends GoRouteData {
   CustomTransitionPage buildPage(BuildContext context, GoRouterState state) => CustomTransitionPage(
         key: state.pageKey,
         child: const PatientsScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeThroughTransition(
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+      );
+}
+
+class InspectRoute extends GoRouteData {
+  const InspectRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage buildPage(BuildContext context, GoRouterState state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const InspectScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeThroughTransition(
             animation: animation,

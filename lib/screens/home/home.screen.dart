@@ -1,3 +1,4 @@
+import 'package:atec/router/routes.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,7 +131,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     width: double.infinity,
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                    child: Image.asset('assets/images/spine_image.png', fit: BoxFit.cover),
+                    child: InkWell(
+                      onTap: () => const InspectRoute().go(context),
+                      child: Stack(
+                        children: [
+                          Image.asset('assets/images/spine_image.png', fit: BoxFit.cover),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Chip(
+                              backgroundColor: AppColors.gray[900],
+                              label: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  AppIcons.magnify_plus_light,
+                                  const Gap(8),
+                                  Text(
+                                    'Tap to enlarge',
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: AppColors.gray[25]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 const Gap(20),
