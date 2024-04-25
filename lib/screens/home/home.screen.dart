@@ -115,107 +115,110 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: SingleChildScrollView(
-            reverse: true,
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Gap(8),
-                Center(
-                  child: Container(
-                    width: double.infinity,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                    child: InkWell(
-                      onTap: () => const InspectRoute().go(context),
-                      child: Stack(
-                        children: [
-                          Image.asset('assets/images/spine_image.png', fit: BoxFit.cover),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Chip(
-                              backgroundColor: AppColors.gray[900],
-                              label: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  AppIcons.magnify_plus_light,
-                                  const Gap(8),
-                                  Text(
-                                    'Tap to enlarge',
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: AppColors.gray[25]),
-                                  ),
-                                ],
+    return AnnotatedRegion(
+      value: AppTheme.systemUiOverlayDark,
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: SingleChildScrollView(
+              reverse: true,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Gap(8),
+                  Center(
+                    child: Container(
+                      width: double.infinity,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                      child: InkWell(
+                        onTap: () => const InspectRoute().go(context),
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/images/spine_image.png', fit: BoxFit.cover),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Chip(
+                                backgroundColor: AppColors.gray[900],
+                                label: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    AppIcons.magnify_plus_light,
+                                    const Gap(8),
+                                    Text(
+                                      'Tap to enlarge',
+                                      style: Theme.of(context).textTheme.labelLarge!.copyWith(color: AppColors.gray[25]),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const Gap(20),
-                Form(
-                  key: _form,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Add Patient', style: Theme.of(context).textTheme.titleLarge),
-                      const Gap(20),
-                      TextFormField(
-                        enableSuggestions: false,
-                        validator: Validators.isEmpty,
-                        focusNode: _firstNameFocusNode,
-                        controller: _firstNameController,
-                        textInputAction: TextInputAction.next,
-                        textCapitalization: TextCapitalization.words,
-                        onSaved: (value) => _patientIntakeForm.firstName = value,
-                        onChanged: (value) => setState(() => _patientIntakeForm.firstName = value),
-                        onFieldSubmitted: (value) => FocusScope.of(context).nextFocus(),
-                        decoration: InputDecoration(
-                          label: const Text('First Name'),
-                          hintText: 'John',
-                          suffixIcon: _firstNameController.value.text.isNotEmpty
-                              ? IconButton(
-                                  onPressed: () => _firstNameController.clear(),
-                                  icon: AppIcons.close_circle_gray,
-                                )
-                              : null,
+                  const Gap(20),
+                  Form(
+                    key: _form,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Add Patient', style: Theme.of(context).textTheme.titleLarge),
+                        const Gap(20),
+                        TextFormField(
+                          enableSuggestions: false,
+                          validator: Validators.isEmpty,
+                          focusNode: _firstNameFocusNode,
+                          controller: _firstNameController,
+                          textInputAction: TextInputAction.next,
+                          textCapitalization: TextCapitalization.words,
+                          onSaved: (value) => _patientIntakeForm.firstName = value,
+                          onChanged: (value) => setState(() => _patientIntakeForm.firstName = value),
+                          onFieldSubmitted: (value) => FocusScope.of(context).nextFocus(),
+                          decoration: InputDecoration(
+                            label: const Text('First Name'),
+                            hintText: 'John',
+                            suffixIcon: _firstNameController.value.text.isNotEmpty
+                                ? IconButton(
+                                    onPressed: () => _firstNameController.clear(),
+                                    icon: AppIcons.close_circle_gray,
+                                  )
+                                : null,
+                          ),
                         ),
-                      ),
-                      const Gap(20.0),
-                      TextFormField(
-                        enableSuggestions: false,
-                        validator: Validators.isEmpty,
-                        focusNode: _lastNameFocusNode,
-                        controller: _lastNameController,
-                        onFieldSubmitted: (_) => _submit(),
-                        textInputAction: TextInputAction.done,
-                        textCapitalization: TextCapitalization.words,
-                        onSaved: (value) => _patientIntakeForm.lastName = value,
-                        onChanged: (value) => setState(() => _patientIntakeForm.lastName = value),
-                        decoration: InputDecoration(
-                          label: const Text('Last Name'),
-                          hintText: 'Doe',
-                          suffixIcon: _lastNameController.value.text.isNotEmpty
-                              ? IconButton(
-                                  onPressed: () => _lastNameController.clear(),
-                                  icon: AppIcons.close_circle_gray,
-                                )
-                              : null,
+                        const Gap(20.0),
+                        TextFormField(
+                          enableSuggestions: false,
+                          validator: Validators.isEmpty,
+                          focusNode: _lastNameFocusNode,
+                          controller: _lastNameController,
+                          onFieldSubmitted: (_) => _submit(),
+                          textInputAction: TextInputAction.done,
+                          textCapitalization: TextCapitalization.words,
+                          onSaved: (value) => _patientIntakeForm.lastName = value,
+                          onChanged: (value) => setState(() => _patientIntakeForm.lastName = value),
+                          decoration: InputDecoration(
+                            label: const Text('Last Name'),
+                            hintText: 'Doe',
+                            suffixIcon: _lastNameController.value.text.isNotEmpty
+                                ? IconButton(
+                                    onPressed: () => _lastNameController.clear(),
+                                    icon: AppIcons.close_circle_gray,
+                                  )
+                                : null,
+                          ),
                         ),
-                      ),
-                      const Gap(20.0),
-                      FilledButton(onPressed: _submit, child: const Text('Add Patient')),
-                      const Gap(20.0),
-                    ],
+                        const Gap(20.0),
+                        FilledButton(onPressed: _submit, child: const Text('Add Patient')),
+                        const Gap(20.0),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
