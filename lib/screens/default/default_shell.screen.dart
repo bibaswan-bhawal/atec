@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:atec/theme/theme.dart';
 
+/// Default Shell Screen to allow for a bottom navigation bar
 class DefaultShellScreen extends StatefulWidget {
   const DefaultShellScreen({super.key, required this.navigator});
 

@@ -4,6 +4,11 @@ import 'package:atec/models/models.dart';
 
 part 'patients.state.g.dart';
 
+/*
+* This is the state notifier for the patients
+* It is used to manage the state of the patients.
+* It is used to add, remove and set the patients
+* */
 @Riverpod(keepAlive: true)
 class PatientsStateNotifier extends _$PatientsStateNotifier {
   @override
@@ -22,6 +27,10 @@ class PatientsStateNotifier extends _$PatientsStateNotifier {
   }
 }
 
+/*
+* Filtered patients state notifier uses the current requested page to
+* limit the number of patients to be displayed
+*/
 @riverpod
 List<Patient> paginatedPatients(PaginatedPatientsRef ref) {
   final patients = ref.watch(patientsStateNotifierProvider);
@@ -34,14 +43,13 @@ List<Patient> paginatedPatients(PaginatedPatientsRef ref) {
   return patients.take(itemCount).toList();
 }
 
+/* Stores the current requested page of the patients list */
 @riverpod
 class PatientsListPageNotifer extends _$PatientsListPageNotifer {
   @override
   int build() => 1;
 
-  void nextPage() {
-    state += 1;
-  }
+  void nextPage() => state += 1;
 
   void previousPage() {
     if (state > 1) state -= 1;

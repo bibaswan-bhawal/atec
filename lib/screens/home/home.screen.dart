@@ -7,6 +7,10 @@ import 'package:atec/utils/utils.dart';
 import 'package:atec/models/models.dart';
 import 'package:atec/states/states.dart';
 
+/* Model to store the patient intake form
+*  data and verify if the form is valid and
+*  build the patient object.
+* */
 class PatientIntakeForm {
   String _firstName = '';
   String _lastName = '';
@@ -33,7 +37,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final GlobalKey<FormState> _form = GlobalKey<FormState>(); // key to form state
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -43,6 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   PatientIntakeForm _patientIntakeForm = PatientIntakeForm();
 
+  // Validate form and show dialog
   void _submit() {
     final formState = _form.currentState!;
     if (formState.validate()) {
@@ -52,9 +57,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
   }
 
+  // Adds patient to the list and clears form.
   void _addPatient(BuildContext dialogContext) async {
-    // Add patient to the state
-
     final patientsProvider = ref.read(patientsStateNotifierProvider.notifier);
 
     patientsProvider.addPatient(_patientIntakeForm.build());
@@ -72,6 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     Navigator.pop(dialogContext);
   }
 
+  // Confirmation dialog to add patient
   Future<void> _showDialog() async {
     return showDialog(
       context: context,

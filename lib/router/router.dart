@@ -5,7 +5,7 @@ import 'routes.dart';
 
 part 'router.g.dart';
 
-
+// Router state provider provides a universal router for the app
 @riverpod
 GoRouter router (RouterRef ref) {
   return GoRouter(

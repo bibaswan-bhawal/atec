@@ -17,6 +17,11 @@ class PatientsScreen extends ConsumerStatefulWidget {
 class _PatientsScreenState extends ConsumerState<PatientsScreen> {
   final FocusNode _searchfocusNode = FocusNode();
 
+  /*
+  * This function is used to build the recent patients list
+  * It takes the context and the index of the patient to be displayed
+  * It returns a Column with the patient's avatar and name
+  * */
   Widget? _buildRecents(BuildContext context, int index) {
     final recentPatients = ref.read(patientsStateNotifierProvider).where((client) => client.type == PatientType.manual).toList();
 
@@ -54,6 +59,11 @@ class _PatientsScreenState extends ConsumerState<PatientsScreen> {
     );
   }
 
+  /*
+  * This function is used to build the patients list
+  * It takes the context and the index of the patient to be displayed
+  * It returns a Dismissible widget with the patient's name
+  * */
   Widget? _buildPatients(BuildContext context, int index) {
     final patient = ref.read(paginatedPatientsProvider)[index];
 
@@ -88,9 +98,13 @@ class _PatientsScreenState extends ConsumerState<PatientsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the entire patients list to enable search and recents
     final patientsProvider = ref.watch(patientsStateNotifierProvider);
+
+    // Get the paginated patients list to display on the screen
     final paginatedPatients = ref.watch(paginatedPatientsProvider);
 
+    // Calculate the recent patients list
     final recentPatients = patientsProvider.where((client) => client.type == PatientType.manual).toList();
 
     return Scaffold(
