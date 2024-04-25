@@ -14,6 +14,7 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 24,
       title: Text(title),
       centerTitle: false,
+      scrolledUnderElevation: 0,
       titleTextStyle: Theme.of(context).textTheme.headlineMedium,
     );
   }

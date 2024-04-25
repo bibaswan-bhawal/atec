@@ -22,6 +22,7 @@ class AppTheme {
       selectionHandleColor: AppColors.gray[900],
       selectionColor: AppColors.gray[900]!.withOpacity(0.2),
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.auto,
       floatingLabelAlignment: FloatingLabelAlignment.start,

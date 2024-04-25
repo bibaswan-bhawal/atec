@@ -1,11 +1,11 @@
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:atec/theme/theme.dart';
 import 'package:atec/utils/utils.dart';
 import 'package:atec/models/models.dart';
+import 'package:atec/states/states.dart';
 
 class PatientIntakeForm {
   String _firstName = '';
@@ -34,17 +34,70 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  final PatientIntakeForm _patientIntakeForm = PatientIntakeForm();
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
+  final FocusNode _firstNameFocusNode = FocusNode();
+  final FocusNode _lastNameFocusNode = FocusNode();
+
+  PatientIntakeForm _patientIntakeForm = PatientIntakeForm();
+
   void _submit() {
     final formState = _form.currentState!;
     if (formState.validate()) {
-      // formState.save();
-      if (kDebugMode) print('Patient: ${_patientIntakeForm.build()}');
+      formState.save();
+
+      _showDialog();
     }
+  }
+
+  void _addPatient(BuildContext dialogContext) async {
+    // Add patient to the state
+
+    final patientsProvider = ref.read(patientsStateNotifierProvider.notifier);
+
+    patientsProvider.addPatient(_patientIntakeForm.build());
+
+    _patientIntakeForm = PatientIntakeForm();
+
+    _form.currentState!.reset();
+
+    _firstNameController.clear();
+    _lastNameController.clear();
+
+    _firstNameFocusNode.unfocus();
+    _lastNameFocusNode.unfocus();
+
+    Navigator.pop(dialogContext);
+  }
+
+  Future<void> _showDialog() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: AppColors.gray[900]!.withOpacity(0.6),
+      builder: (context) => AlertDialog(
+        title: const Text('Add new patient?'),
+        content: const Text('Do you want to add a new patient with the name Bibaswan Bhawal?'),
+        titleTextStyle: Theme.of(context).textTheme.headlineSmall,
+        contentTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColors.gray[500]),
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: AppColors.gray[25],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(foregroundColor: AppColors.warning),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => _addPatient(context),
+            style: TextButton.styleFrom(foregroundColor: AppColors.gray[900]),
+            child: const Text('Add Patient'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -62,6 +115,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
             reverse: true,
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -81,15 +135,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Add Patient', style: Theme.of(context).textTheme.titleLarge),
-                      const Gap(8),
+                      const Gap(20),
                       TextFormField(
                         enableSuggestions: false,
                         validator: Validators.isEmpty,
+                        focusNode: _firstNameFocusNode,
                         controller: _firstNameController,
-                        keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
+                        textCapitalization: TextCapitalization.words,
                         onSaved: (value) => _patientIntakeForm.firstName = value,
                         onChanged: (value) => setState(() => _patientIntakeForm.firstName = value),
+                        onFieldSubmitted: (value) => FocusScope.of(context).nextFocus(),
                         decoration: InputDecoration(
                           label: const Text('First Name'),
                           hintText: 'John',
@@ -105,10 +161,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       TextFormField(
                         enableSuggestions: false,
                         validator: Validators.isEmpty,
+                        focusNode: _lastNameFocusNode,
                         controller: _lastNameController,
-                        keyboardType: TextInputType.name,
                         onFieldSubmitted: (_) => _submit(),
                         textInputAction: TextInputAction.done,
+                        textCapitalization: TextCapitalization.words,
                         onSaved: (value) => _patientIntakeForm.lastName = value,
                         onChanged: (value) => setState(() => _patientIntakeForm.lastName = value),
                         decoration: InputDecoration(
