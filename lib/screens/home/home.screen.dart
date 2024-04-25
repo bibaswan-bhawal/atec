@@ -84,7 +84,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       barrierColor: AppColors.gray[900]!.withOpacity(0.6),
       builder: (context) => AlertDialog(
         title: const Text('Add new patient?'),
-        content: const Text('Do you want to add a new patient with the name Bibaswan Bhawal?'),
+        content: Text('Do you want to add a new patient with the name ${_patientIntakeForm.firstName} ${_patientIntakeForm.lastName}?'),
         titleTextStyle: Theme.of(context).textTheme.headlineSmall,
         contentTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColors.gray[500]),
         surfaceTintColor: Colors.transparent,
