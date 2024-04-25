@@ -1,16 +1,30 @@
-# atec
+# ATEC - Design Challenge
 
-A new Flutter project.
+A flutter app that lets you view and add patients.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run the project make sure you are on the latest stable build of flutter.
+```bash
+flutter channel stable
+flutter upgrade --force
+```
 
-A few resources to get you started if this is your first Flutter project:
+Once you are on the latest stable build ***3.19.6 (last tested)*** install all dependencies
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```bash
+flutter pub get
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**This project makes use of code-generation before you can run it you must run the code-generator.**
+
+```bash
+dart run build_runner build
+```
+
+Once the the code generation is complete you can run the app on any android or ios device/simulator.
+
+```bash
+flutter run --release
+```
+

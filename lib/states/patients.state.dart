@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:atec/models/models.dart';
@@ -31,8 +30,6 @@ List<Patient> paginatedPatients(PaginatedPatientsRef ref) {
   if (patients.length <= 25) return patients;
 
   final itemCount = ((page) * 25) > patients.length ? patients.length : (page) * 25;
-
-  print('rebuilding');
 
   return patients.take(itemCount).toList();
 }
